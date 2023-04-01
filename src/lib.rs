@@ -1,7 +1,7 @@
-#![allow(incomplete_features)]
+// #![allow(incomplete_features)]
 // We use trait upcasting in the implementation, it just makes things easier though, we can live
 // without it.
-#![feature(trait_upcasting)]
+// #![feature(trait_upcasting)]
 
 // This crate is an implementation for an object provider API in core, proposed in [RFC XXXX](TODO).
 

@@ -17,14 +17,14 @@ impl<T: Error> Provider for T {
 }
 
 // Methods on `Error` trait objects.
-impl dyn Error {
-    /// Common case: get a reference to a field of the error.
-    pub fn get_context_ref<T: ?Sized + 'static>(&self) -> Option<&T> {
-        provide_any::request_ref(self)
-    }
+// impl dyn Error {
+//     /// Common case: get a reference to a field of the error.
+//     pub fn get_context_ref<T: ?Sized + 'static>(&self) -> Option<&T> {
+//         provide_any::request_ref(self)
+//     }
 
-    /// Get a temporary value.
-    pub fn get_context<T: 'static>(&self) -> Option<T> {
-        provide_any::request_value(self)
-    }
-}
+//     /// Get a temporary value.
+//     pub fn get_context<T: 'static>(&self) -> Option<T> {
+//         provide_any::request_value(self)
+//     }
+// }

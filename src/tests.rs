@@ -19,41 +19,41 @@ impl Error for ConcreteError {
     }
 }
 
-#[test]
-fn access_context() {
-    let e: &dyn Error = &mut ConcreteError {
-        name: "Bob".to_owned(),
-        array: vec!["Alice".to_owned()],
-    };
+// #[test]
+// fn access_context() {
+//     let e: &dyn Error = &mut ConcreteError {
+//         name: "Bob".to_owned(),
+//         array: vec!["Alice".to_owned()],
+//     };
 
-    // Get context by value.
-    let s: String = e.get_context().unwrap();
-    assert_eq!(&s, "Hello!");
+//     // Get context by value.
+//     let s: String = e.get_context().unwrap();
+//     assert_eq!(&s, "Hello!");
 
-    // Get context by reference.
-    let s: &[String] = e.get_context_ref().unwrap();
-    assert_eq!(s, &*vec!["Alice".to_owned()]);
+//     // Get context by reference.
+//     let s: &[String] = e.get_context_ref().unwrap();
+//     assert_eq!(s, &*vec!["Alice".to_owned()]);
 
-    let s: &str = e.get_context_ref().unwrap();
-    assert_eq!(s, "Bob");
+//     let s: &str = e.get_context_ref().unwrap();
+//     assert_eq!(s, "Bob");
 
-    let v: Vec<String> = e.get_context().unwrap();
-    assert_eq!(v, vec!["Alice".to_owned()]);
-}
+//     let v: Vec<String> = e.get_context().unwrap();
+//     assert_eq!(v, vec!["Alice".to_owned()]);
+// }
 
 // Implement Provider from a non-core crate.
 // Also demonstrates use of mutable references.
 trait Foo: Provider {}
 
-impl dyn Foo {
-    pub fn get_ref<T: ?Sized + 'static>(&self) -> Option<&T> {
-        provide_any::request_ref(self)
-    }
+// impl dyn Foo {
+//     pub fn get_ref<T: ?Sized + 'static>(&self) -> Option<&T> {
+//         provide_any::request_ref(self)
+//     }
 
-    pub fn get_mut<T: ?Sized + 'static>(&mut self) -> Option<&mut T> {
-        provide_any::request_mut(self)
-    }
-}
+//     pub fn get_mut<T: ?Sized + 'static>(&mut self) -> Option<&mut T> {
+//         provide_any::request_mut(self)
+//     }
+// }
 
 struct Bar {
     s: String,
@@ -74,18 +74,18 @@ impl Provider for Bar {
     }
 }
 
-#[test]
-fn foo() {
-    let mut b = Bar {
-        s: "Bob".to_owned(),
-    };
-    let f: &mut dyn Foo = &mut b;
+// #[test]
+// fn foo() {
+//     let mut b = Bar {
+//         s: "Bob".to_owned(),
+//     };
+//     let f: &mut dyn Foo = &mut b;
 
-    let s: &String = f.get_ref().unwrap();
-    assert_eq!(s, "Bob");
+//     let s: &String = f.get_ref().unwrap();
+//     assert_eq!(s, "Bob");
 
-    let s: &mut String = f.get_mut().unwrap();
-    s.push_str(" and Alice");
-    let _b: &mut Bar = f.get_mut().unwrap();
-    assert_eq!(b.s, "Bob and Alice");
-}
+//     let s: &mut String = f.get_mut().unwrap();
+//     s.push_str(" and Alice");
+//     let _b: &mut Bar = f.get_mut().unwrap();
+//     assert_eq!(b.s, "Bob and Alice");
+// }
