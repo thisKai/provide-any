@@ -151,6 +151,11 @@ mod tags {
 pub struct Demand<'a>(dyn Erased<'a> + 'a);
 
 impl<'a> Demand<'a> {
+    /// Check if a value has been provided
+    pub fn found(&self) -> bool {
+        self.0.is_some()
+    }
+
     /// Provide a value or other type with only static lifetimes.
     pub fn provide_value<T, F>(&mut self, f: F) -> &mut Self
     where
@@ -244,11 +249,17 @@ impl<'a, I: tags::Type<'a>> TaggedOption<'a, I> {
 trait Erased<'a>: 'a {
     /// The `TypeId` of the `TypeTag` this value was tagged with.
     fn tag_id(&self) -> TypeId;
+
+    fn is_some(&self) -> bool;
 }
 
 impl<'a, I: tags::Type<'a>> Erased<'a> for TaggedOption<'a, I> {
     fn tag_id(&self) -> TypeId {
         TypeId::of::<I>()
+    }
+
+    fn is_some(&self) -> bool {
+        self.0.is_some()
     }
 }
 
